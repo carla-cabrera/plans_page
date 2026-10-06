@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Your REVER plan</title>
+
 <style>
   :root {
     --navy: #000d1f;
@@ -18,6 +19,7 @@
     --button-text: #ffffff;
     --link: #0b6fcc;
   }
+
   @media (prefers-color-scheme: dark) {
     :root {
       --bg: #000d1f;
@@ -31,147 +33,418 @@
       --link: #5eb0ff;
     }
   }
-  * { box-sizing: border-box; }
-  html { -webkit-text-size-adjust: 100%; }
-  body {
-    margin: 0; background: var(--bg); color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    min-height: 100vh; display: flex; justify-content: center; padding: 72px 24px 56px;
-  }
-  main { width: 100%; max-width: 420px; display: flex; flex-direction: column; align-items: center; }
-  #content { width: 100%; }
-  .logo { width: 44px; height: 44px; border-radius: 50%; overflow: hidden; margin: 0 auto 28px; background: var(--navy); }
-  .logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  h1 { font-size: 30px; font-weight: 600; letter-spacing: -0.015em; margin: 0 0 8px; text-align: center; line-height: 1.15; }
-  .subtitle { font-size: 16px; line-height: 1.5; color: var(--text-secondary); margin: 0 auto 36px; text-align: center; max-width: 320px; }
 
-  .switcher { position: relative; display: flex; width: 100%; background: var(--track-bg); border-radius: 12px; padding: 3px; margin-bottom: 36px; }
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Helvetica, Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 72px 24px 56px;
+  }
+
+  main {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #content {
+    width: 100%;
+  }
+
+  .logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 28px;
+    background: var(--navy);
+  }
+
+  .logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  h1 {
+    font-size: 30px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin: 0 0 8px;
+    text-align: center;
+    line-height: 1.15;
+  }
+
+  .subtitle {
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    margin: 0 auto 36px;
+    text-align: center;
+    max-width: 320px;
+  }
+
+  .switcher {
+    position: relative;
+    display: flex;
+    width: 100%;
+    background: var(--track-bg);
+    border-radius: 12px;
+    padding: 3px;
+    margin-bottom: 36px;
+  }
+
   .thumb {
-    position: absolute; top: 3px; bottom: 3px; left: 3px;
-    width: calc((100% - 6px) / var(--n, 3)); background: var(--surface);
-    border-radius: 9px; box-shadow: 0 1px 4px rgba(0, 13, 31, 0.16);
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    left: 3px;
+    width: calc((100% - 6px) / var(--n, 3));
+    background: var(--surface);
+    border-radius: 9px;
+    box-shadow: 0 1px 4px rgba(0, 13, 31, 0.16);
     transform: translateX(calc(100% * var(--i, 0)));
     transition: transform 0.35s cubic-bezier(0.32, 0.72, 0, 1);
   }
+
   .switcher button {
-    position: relative; z-index: 1; flex: 1; border: none; background: transparent;
-    font: inherit; font-size: 14px; font-weight: 500; color: var(--text-secondary);
-    padding: 9px 4px; border-radius: 9px; cursor: pointer; transition: color 0.25s;
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    border: none;
+    background: transparent;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    padding: 9px 4px;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: color 0.25s;
   }
-  .switcher button[aria-selected="true"] { color: var(--text); }
-  .switcher button:focus-visible, .continue-btn:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 
-  .price-block { text-align: center; min-height: 140px; transition: opacity 0.2s ease; }
-  .price-block.out { opacity: 0; }
-  .price-row { display: flex; align-items: baseline; justify-content: center; gap: 8px; }
-  .price { font-size: 56px; font-weight: 300; letter-spacing: -0.02em; line-height: 1; }
-  .price-period { font-size: 17px; color: var(--text-secondary); }
-  .price-note { font-size: 14px; color: var(--text-secondary); margin: 10px 0 0; line-height: 1.5; }
-  .price-note strong { color: var(--text); font-weight: 600; }
-  .price-note .save { color: var(--link); font-weight: 600; }
+  .switcher button[aria-selected="true"] {
+    color: var(--text);
+  }
 
-  hr { width: 100%; border: none; border-top: 1px solid var(--border); margin: 28px 0; }
-  .plan-desc { font-size: 14px; color: var(--text-secondary); line-height: 1.6; text-align: center; margin: 0 0 28px; }
+  .switcher button:focus-visible,
+  .continue-btn:focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 2px;
+  }
+
+  .price-block {
+    text-align: center;
+    min-height: 140px;
+    transition: opacity 0.2s ease;
+  }
+
+  .price-block.out {
+    opacity: 0;
+  }
+
+  .price-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .price {
+    font-size: 56px;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+
+  .price-period {
+    font-size: 17px;
+    color: var(--text-secondary);
+  }
+
+  .price-note {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin: 10px 0 0;
+    line-height: 1.5;
+  }
+
+  .price-note strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .price-note .save {
+    color: var(--link);
+    font-weight: 600;
+  }
+
+  hr {
+    width: 100%;
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 28px 0;
+  }
+
+  .plan-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    text-align: center;
+    margin: 0 0 28px;
+  }
 
   .continue-btn {
-    width: 100%; padding: 14px; border: none; border-radius: 980px;
-    background: var(--button-bg); color: var(--button-text);
-    font: inherit; font-size: 16px; font-weight: 500; cursor: pointer; transition: opacity 0.2s;
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 980px;
+    background: var(--button-bg);
+    color: var(--button-text);
+    font: inherit;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: opacity 0.2s;
   }
-  .continue-btn:hover { opacity: 0.88; }
-  .footnote { font-size: 12px; color: var(--text-secondary); margin-top: 22px; text-align: center; }
-  .error { font-size: 15px; color: var(--text-secondary); text-align: center; margin-top: 40px; line-height: 1.5; }
 
-  @media (prefers-reduced-motion: reduce) { .thumb, .continue-btn, .price-block { transition: none !important; } }
-  @media (max-width: 420px) { body { padding-top: 48px; } h1 { font-size: 26px; } .price { font-size: 46px; } }
+  .continue-btn:hover {
+    opacity: 0.88;
+  }
+
+  .footnote {
+    font-size: 12px;
+    color: var(--text-secondary);
+    margin-top: 22px;
+    text-align: center;
+  }
+
+  .error {
+    font-size: 15px;
+    color: var(--text-secondary);
+    text-align: center;
+    margin-top: 40px;
+    line-height: 1.5;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .thumb,
+    .continue-btn,
+    .price-block {
+      transition: none !important;
+    }
+  }
+
+  @media (max-width: 420px) {
+    body {
+      padding-top: 48px;
+    }
+
+    h1 {
+      font-size: 26px;
+    }
+
+    .price {
+      font-size: 46px;
+    }
+  }
 </style>
 </head>
+
 <body>
+
 <main>
   <div id="content">
-    <div class="logo"><img src="logo.png" alt="REVER" onerror="this.parentNode.style.display='none'"></div>
+
+    <div class="logo">
+      <img src="logo.png" alt="REVER" onerror="this.parentNode.style.display='none'">
+    </div>
+
     <h1>Choose your plan</h1>
     <p class="subtitle">Pick the option that works best for you.</p>
 
-    <div class="switcher" id="switcher" role="tablist"><div class="thumb"></div></div>
+    <div class="switcher" id="switcher" role="tablist">
+      <div class="thumb"></div>
+    </div>
 
     <div class="price-block" id="priceBlock">
       <div class="price-row">
         <span class="price" id="price"></span>
         <span class="price-period" id="pricePeriod"></span>
       </div>
+
       <p class="price-note" id="priceNote"></p>
     </div>
 
     <hr>
+
     <p class="plan-desc" id="planDesc"></p>
+
     <button class="continue-btn" id="continueBtn" type="button"></button>
+
     <p class="footnote">Secure checkout by Stripe.</p>
   </div>
-  <p class="error" id="errorMsg" style="display:none;">This link is missing information. Please contact us for a new payment link.</p>
+
+  <p class="error" id="errorMsg" style="display:none;">
+    This link is missing information. Please contact us for a new payment link.
+  </p>
 </main>
 
 <script>
 (function () {
-  // Payment links are only accepted from these hosts (prevents crafted URLs from redirecting elsewhere).
   var ALLOWED_HOSTS = ["buy.stripe.com", "pay.itsrever.com"];
-
-  /* URL parameters
-     cu, ca, cp : contract plan  -> link, amount (e.g. 100 or 100.50), billing cycle in months (1, 3, 6, 12)
-     au, aa, ad : annual plan    -> link, amount, discount % (optional)
-     tu, ta, td : 2-year plan    -> link, amount, discount % (optional)
-     Plans with a missing or invalid link/amount are hidden. */
   var q = new URLSearchParams(window.location.search);
 
-  function okUrl(u) {
-    try { var x = new URL(u); return x.protocol === "https:" && ALLOWED_HOSTS.indexOf(x.hostname) !== -1; }
-    catch (e) { return false; }
+  function okUrl(url) {
+    try {
+      var parsedUrl = new URL(url);
+
+      if (parsedUrl.protocol !== "https:") {
+        return false;
+      }
+
+      if (ALLOWED_HOSTS.indexOf(parsedUrl.hostname) === -1) {
+        return false;
+      }
+
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
-  function okNum(n) { return /^\d+(\.\d{1,2})?$/.test(n || ""); }
-  function money(n) {
-    var v = Number(n);
-    return "€" + v.toLocaleString("en-GB", { minimumFractionDigits: v % 1 ? 2 : 0, maximumFractionDigits: 2 });
+
+  function okNum(number) {
+    return /^\d+(\.\d{1,2})?$/.test(number || "");
+  }
+
+  function money(number) {
+    var value = Number(number);
+
+    var formattedValue = value.toLocaleString("en-GB", {
+      minimumFractionDigits: value % 1 ? 2 : 0,
+      maximumFractionDigits: 2
+    });
+
+    return "€" + formattedValue;
   }
 
   var months = parseInt(q.get("cp"), 10);
-  if ([1, 3, 6, 12].indexOf(months) === -1) months = 1;
-  var cadence = months === 1 ? "monthly" : months === 12 ? "annually" : "every " + months + " months";
-  var cycle = months === 1 ? "per month" : months === 12 ? "per year" : "every " + months + " months";
 
-  function note(amount, every, disc) {
-    var base = "Billed as <strong>" + money(amount) + "</strong> once " + every;
-    return okNum(disc) && Number(disc) > 0
-      ? base + " — <span class=\"save\">" + Number(disc) + "% less</span> than paying " + cadence + "."
-      : base + ".";
+  if ([1, 3, 6, 12].indexOf(months) === -1) {
+    months = 1;
+  }
+
+  var isAnnual = false;
+
+  if (q.get("ia") === "1") {
+    isAnnual = true;
+  }
+
+  var cadence = "";
+
+  if (months === 1) {
+    cadence = "monthly";
+  } else if (months === 12) {
+    cadence = "annually";
+  } else {
+    cadence = "every " + months + " months";
+  }
+
+  var cycle = "";
+
+  if (months === 1) {
+    cycle = "per month";
+  } else if (months === 12) {
+    cycle = "per year";
+  } else {
+    cycle = "every " + months + " months";
   }
 
   var plans = [];
+
   if (okUrl(q.get("cu")) && okNum(q.get("ca"))) {
+    var currentPeriod = "";
+
+    if (isAnnual) {
+      currentPeriod = "per year";
+    } else {
+      currentPeriod = cycle;
+    }
+
+    var currentDescription = "";
+
+    if (isAnnual) {
+      currentDescription = "Your REVER annual plan continues exactly as it is today.";
+    } else {
+      currentDescription = "Your REVER plan continues exactly as it is today.";
+    }
+
     plans.push({
-      tab: "Current plan", price: money(q.get("ca")), period: cycle,
+      tab: "Current plan",
+      price: money(q.get("ca")),
+      period: currentPeriod,
       note: "No changes — keep paying as originally agreed.",
-      desc: "Your REVER plan continues exactly as it is today.",
-      cta: "Continue with your current plan", url: q.get("cu")
-    });
-  }
-  if (okUrl(q.get("au")) && okNum(q.get("aa"))) {
-    plans.push({
-      tab: "Annual", price: money(q.get("aa")), period: "per year",
-      note: note(q.get("aa"), "a year", q.get("ad")),
-      desc: "Same REVER plan and features, billed once a year instead of " + cadence + ".",
-      cta: "Continue with the annual plan", url: q.get("au")
-    });
-  }
-  if (okUrl(q.get("tu")) && okNum(q.get("ta"))) {
-    plans.push({
-      tab: "2 years", price: money(q.get("ta")), period: "every 2 years",
-      note: note(q.get("ta"), "every 2 years", q.get("td")),
-      desc: "Same REVER plan and features, billed once every two years instead of " + cadence + ".",
-      cta: "Continue with the 2-year plan", url: q.get("tu")
+      desc: currentDescription,
+      cta: "Continue with your current plan",
+      url: q.get("cu")
     });
   }
 
-  if (!plans.length) {
+  if (!isAnnual && okUrl(q.get("au")) && okNum(q.get("aa"))) {
+    var annualNote = "Billed as <strong>" + money(q.get("aa")) +
+      "</strong> once a year — <span class=\"save\">10% less</span> than paying " +
+      cadence + ".";
+
+    var annualDescription = "Same REVER plan and features, billed once a year instead of " +
+      cadence + ".";
+
+    plans.push({
+      tab: "Annual",
+      price: money(q.get("aa")),
+      period: "per year",
+      note: annualNote,
+      desc: annualDescription,
+      cta: "Continue with the annual plan",
+      url: q.get("au")
+    });
+  }
+
+  if (okUrl(q.get("tu")) && okNum(q.get("ta"))) {
+    var twoYearNote = "Billed as <strong>" + money(q.get("ta")) +
+      "</strong> every 2 years — <span class=\"save\">20% less</span> than paying " +
+      cadence + ".";
+
+    var twoYearDescription = "Same REVER plan and features, billed once every two years instead of " +
+      cadence + ".";
+
+    plans.push({
+      tab: "2 years",
+      price: money(q.get("ta")),
+      period: "every 2 years",
+      note: twoYearNote,
+      desc: twoYearDescription,
+      cta: "Continue with the 2-year plan",
+      url: q.get("tu")
+    });
+  }
+
+  if (plans.length === 0) {
     document.getElementById("content").style.display = "none";
     document.getElementById("errorMsg").style.display = "block";
     return;
@@ -184,47 +457,85 @@
   var noteEl = document.getElementById("priceNote");
   var descEl = document.getElementById("planDesc");
   var btn = document.getElementById("continueBtn");
+
   var tabs = [];
   var current = -1;
 
   switcher.style.setProperty("--n", plans.length);
-  if (plans.length === 1) switcher.style.display = "none";
 
-  function render(i) {
-    var p = plans[i];
-    priceEl.textContent = p.price;
-    periodEl.textContent = p.period;
-    noteEl.innerHTML = p.note;
-    descEl.textContent = p.desc;
-    btn.textContent = p.cta;
-    btn.onclick = function () { window.location.href = p.url; };
+  if (plans.length === 1) {
+    switcher.style.display = "none";
   }
 
-  function select(i, instant) {
-    if (i === current) return;
-    current = i;
-    switcher.style.setProperty("--i", i);
-    tabs.forEach(function (t, k) { t.setAttribute("aria-selected", k === i ? "true" : "false"); });
-    if (instant) { render(i); return; }
+  function render(index) {
+    var plan = plans[index];
+
+    priceEl.textContent = plan.price;
+    periodEl.textContent = plan.period;
+    noteEl.innerHTML = plan.note;
+    descEl.textContent = plan.desc;
+    btn.textContent = plan.cta;
+
+    btn.onclick = function () {
+      window.location.href = plan.url;
+    };
+  }
+
+  function select(index, instant) {
+    if (index === current) {
+      return;
+    }
+
+    current = index;
+    switcher.style.setProperty("--i", index);
+
+    tabs.forEach(function (tab, tabIndex) {
+      if (tabIndex === index) {
+        tab.setAttribute("aria-selected", "true");
+      } else {
+        tab.setAttribute("aria-selected", "false");
+      }
+    });
+
+    if (instant) {
+      render(index);
+      return;
+    }
+
     priceBlock.classList.add("out");
-    setTimeout(function () { render(i); priceBlock.classList.remove("out"); }, 150);
+
+    setTimeout(function () {
+      render(index);
+      priceBlock.classList.remove("out");
+    }, 150);
   }
 
-  plans.forEach(function (p, i) {
-    var b = document.createElement("button");
-    b.type = "button";
-    b.setAttribute("role", "tab");
-    b.textContent = p.tab;
-    b.addEventListener("click", function () { select(i, false); });
-    switcher.appendChild(b);
-    tabs.push(b);
+  plans.forEach(function (plan, index) {
+    var button = document.createElement("button");
+
+    button.type = "button";
+    button.setAttribute("role", "tab");
+    button.textContent = plan.tab;
+
+    button.addEventListener("click", function () {
+      select(index, false);
+    });
+
+    switcher.appendChild(button);
+    tabs.push(button);
   });
 
-  // Open on the annual plan when available, otherwise on the first plan.
   var start = 0;
-  plans.forEach(function (p, i) { if (p.tab === "Annual") start = i; });
+
+  plans.forEach(function (plan, index) {
+    if (plan.tab === "Current plan") {
+      start = index;
+    }
+  });
+
   select(start, true);
 })();
 </script>
+
 </body>
 </html>
