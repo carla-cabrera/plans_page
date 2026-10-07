@@ -388,7 +388,7 @@
 
   if (okUrl(q.get("tu")) && okNum(q.get("ta"))) {
     var twoYearMonthly = Number(q.get("ta")) / 24;
-    var twoYearNote = "Billed as <strong>" + money(q.get("ta")) +"</strong> every 2 years — <span class=\"save\">20% less</span> than paying " +cadence + ".";
+    var twoYearNote = "Billed as <strong>" + money(q.get("ta")) + "</strong> every 2 years — <span class=\"save\">20% discount</span> based on your agreed monthly rate.";
     plans.push({
       tab: "2 years",
       price: money(q.get("ta")),
