@@ -100,8 +100,8 @@
 
   .plans {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 36px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
     width: 100%;
     align-items: stretch;
   }
@@ -232,6 +232,13 @@
     line-height: 1.5;
   }
 
+  @media (max-width: 900px) {
+    .plans {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+
   @media (max-width: 560px) {
     .plans {
       grid-template-columns: 1fr;
@@ -313,15 +320,19 @@
     });
     return "€" + formattedValue;
   }
+
   var months = parseInt(q.get("cp"), 10);
 
   if ([1, 3, 6, 12].indexOf(months) === -1) {
     months = 1;
   }
+
   var isAnnual = false;
+
   if (q.get("ia") === "1") {
     isAnnual = true;
   }
+
   var cadence = "";
 
   if (months === 1) {
@@ -331,6 +342,7 @@
   } else {
     cadence = "every " + months + " months";
   }
+
   var cycle = "";
 
   if (months === 1) {
@@ -340,10 +352,12 @@
   } else {
     cycle = "every " + months + " months";
   }
+
   var plans = [];
 
   if (okUrl(q.get("cu")) && okNum(q.get("ca"))) {
     var currentPeriod = "";
+
     if (isAnnual) {
       currentPeriod = "per year";
     } else {
@@ -372,7 +386,8 @@
 
   if (!isAnnual && okUrl(q.get("au")) && okNum(q.get("aa"))) {
     var annualMonthly = Number(q.get("aa")) / 12;
-    var annualNote = "Billed as <strong>" + money(q.get("aa")) + "</strong> once a year — <span class=\"save\">10% less</span> than paying " +cadence + ".";
+
+    var annualNote = "Billed as <strong>" + money(q.get("aa")) + "</strong> once a year — <span class=\"save\">10% discount</span> based on your agreed monthly rate.";
 
     plans.push({
       tab: "Annual",
@@ -380,7 +395,7 @@
       period: "per year",
       note: annualNote,
       monthly: "Equivalent to <strong>" + money(annualMonthly) + "/month</strong>",
-      desc: "Same REVER plan and features, billed once a year instead of " +cadence + ".",
+      desc: "Same REVER plan and features, billed once a year instead of " + cadence + ".",
       cta: "Continue with the annual plan",
       url: q.get("au")
     });
@@ -388,14 +403,16 @@
 
   if (okUrl(q.get("tu")) && okNum(q.get("ta"))) {
     var twoYearMonthly = Number(q.get("ta")) / 24;
+
     var twoYearNote = "Billed as <strong>" + money(q.get("ta")) + "</strong> every 2 years — <span class=\"save\">20% discount</span> based on your agreed monthly rate.";
+
     plans.push({
       tab: "2 years",
       price: money(q.get("ta")),
       period: "every 2 years",
       note: twoYearNote,
       monthly: "Equivalent to <strong>" + money(twoYearMonthly) + "/month</strong>",
-      desc: "Same REVER plan and features, billed once every two years instead of " +cadence + ".",
+      desc: "Same REVER plan and features, billed once every two years instead of " + cadence + ".",
       cta: "Continue with the 2-year plan",
       url: q.get("tu")
     });
@@ -412,7 +429,10 @@
   var annualCard = null;
 
   function selectCard(card) {
-    cards.forEach(function (c) { c.classList.remove("selected"); });
+    cards.forEach(function (c) {
+      c.classList.remove("selected");
+    });
+
     card.classList.add("selected");
   }
 
@@ -423,10 +443,19 @@
     var monthlyHtml = "";
 
     if (plan.monthly) {
-      monthlyHtml = "<p class=\"plan-monthly\">" +plan.monthly +"</p>";
+      monthlyHtml = "<p class=\"plan-monthly\">" + plan.monthly + "</p>";
     }
 
-    card.innerHTML = "<p class=\"plan-tab\">" + plan.tab + "</p>" + "<div class=\"plan-price-row\">" +"<span class=\"plan-price\">" + plan.price + "</span>" +"<span class=\"plan-period\">" + plan.period + "</span>" +"</div>" + "<p class=\"plan-note\">" + plan.note + "</p>" + monthlyHtml +"<p class=\"plan-desc\">" + plan.desc + "</p>" +"<button type=\"button\" class=\"plan-btn\">" +plan.cta + "</button>";
+    card.innerHTML =
+      "<p class=\"plan-tab\">" + plan.tab + "</p>" +
+      "<div class=\"plan-price-row\">" +
+        "<span class=\"plan-price\">" + plan.price + "</span>" +
+        "<span class=\"plan-period\">" + plan.period + "</span>" +
+      "</div>" +
+      "<p class=\"plan-note\">" + plan.note + "</p>" +
+      monthlyHtml +
+      "<p class=\"plan-desc\">" + plan.desc + "</p>" +
+      "<button type=\"button\" class=\"plan-btn\">" + plan.cta + "</button>";
 
     card.addEventListener("click", function () {
       selectCard(card);
