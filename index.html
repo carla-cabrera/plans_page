@@ -409,6 +409,7 @@
 
   var plansEl = document.getElementById("plans");
   var cards = [];
+  var annualCard = null;
 
   function selectCard(card) {
     cards.forEach(function (c) { c.classList.remove("selected"); });
@@ -439,7 +440,13 @@
 
     plansEl.appendChild(card);
     cards.push(card);
+
+    if (plan.tab === "Annual") {
+      annualCard = card;
+    }
   });
+
+  selectCard(annualCard || cards[0]);
 })();
 </script>
 
