@@ -116,25 +116,14 @@
     padding: 44px 32px 36px;
   }
 
-  .plan-card.featured {
-    border: 2px solid var(--blue);
-    box-shadow: 0 8px 28px rgba(23, 144, 255, 0.18);
+  .plan-card {
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
   }
 
-  .plan-badge {
-    position: absolute;
-    top: -14px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--blue);
-    color: #ffffff;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    padding: 5px 14px;
-    border-radius: 980px;
-    white-space: nowrap;
+  .plan-card.selected {
+    border: 2px solid var(--blue);
+    box-shadow: 0 8px 28px rgba(23, 144, 255, 0.18);
   }
 
   .plan-tab {
@@ -377,8 +366,7 @@
       monthly: "",
       desc: currentDescription,
       cta: "Continue with your current plan",
-      url: q.get("cu"),
-      featured: false
+      url: q.get("cu")
     });
   }
 
@@ -394,9 +382,7 @@
       monthly: "Equivalent to <strong>" + money(annualMonthly) + "/month</strong>",
       desc: "Same REVER plan and features, billed once a year instead of " +cadence + ".",
       cta: "Continue with the annual plan",
-      url: q.get("au"),
-      featured: true,
-      badge: "Recommended"
+      url: q.get("au")
     });
   }
 
@@ -411,8 +397,7 @@
       monthly: "Equivalent to <strong>" + money(twoYearMonthly) + "/month</strong>",
       desc: "Same REVER plan and features, billed once every two years instead of " +cadence + ".",
       cta: "Continue with the 2-year plan",
-      url: q.get("tu"),
-      featured: false
+      url: q.get("tu")
     });
   }
 
@@ -423,31 +408,37 @@
   }
 
   var plansEl = document.getElementById("plans");
+  var cards = [];
+
+  function selectCard(card) {
+    cards.forEach(function (c) { c.classList.remove("selected"); });
+    card.classList.add("selected");
+  }
 
   plans.forEach(function (plan) {
     var card = document.createElement("div");
     card.className = "plan-card";
 
-    if (plan.featured) {
-      card.className += " featured";
-    }
-
-    var badgeHtml = "";
-
-    if (plan.featured && plan.badge) {
-      badgeHtml = "<span class=\"plan-badge\">" +plan.badge +"</span>";
-    }
     var monthlyHtml = "";
 
     if (plan.monthly) {
       monthlyHtml = "<p class=\"plan-monthly\">" +plan.monthly +"</p>";
     }
 
-    card.innerHTML = badgeHtml + "<p class=\"plan-tab\">" + plan.tab + "</p>" + "<div class=\"plan-price-row\">" +"<span class=\"plan-price\">" + plan.price + "</span>" +"<span class=\"plan-period\">" + plan.period + "</span>" +"</div>" + "<p class=\"plan-note\">" + plan.note + "</p>" + monthlyHtml +"<p class=\"plan-desc\">" + plan.desc + "</p>" +"<button type=\"button\" class=\"plan-btn\">" +plan.cta + "</button>";
-    card.querySelector(".plan-btn").addEventListener("click", function () {
+    card.innerHTML = "<p class=\"plan-tab\">" + plan.tab + "</p>" + "<div class=\"plan-price-row\">" +"<span class=\"plan-price\">" + plan.price + "</span>" +"<span class=\"plan-period\">" + plan.period + "</span>" +"</div>" + "<p class=\"plan-note\">" + plan.note + "</p>" + monthlyHtml +"<p class=\"plan-desc\">" + plan.desc + "</p>" +"<button type=\"button\" class=\"plan-btn\">" +plan.cta + "</button>";
+
+    card.addEventListener("click", function () {
+      selectCard(card);
+    });
+
+    card.querySelector(".plan-btn").addEventListener("click", function (e) {
+      e.stopPropagation();
+      selectCard(card);
       window.location.href = plan.url;
     });
+
     plansEl.appendChild(card);
+    cards.push(card);
   });
 })();
 </script>
