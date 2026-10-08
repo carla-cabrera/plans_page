@@ -97,18 +97,16 @@
     grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 24px;
     width: 100%;
-    align-items: stretch;
+    align-items: stretch; /* Assegura que totes les targetes mesuren el mateix */
   }
   .plan-card {
     position: relative;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Clau per alinear elements verticalment */
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 24px;
     padding: 44px 32px 36px;
-  }
-  .plan-card {
     cursor: pointer;
     transition: border-color 0.2s, box-shadow 0.2s;
   }
@@ -171,7 +169,7 @@
     line-height: 1.6;
     text-align: center;
     margin: 28px 0 0;
-    flex: 1;
+    flex: 1; /* Permet que aquest bloc ocupi l'espai sobrant i empenyi el botó abaix */
   }
   .plan-btn {
     width: 100%;
@@ -185,11 +183,11 @@
     font-weight: 500;
     cursor: pointer;
     transition: opacity 0.2s;
-    margin-top: 32px;
+    margin-top: 32px; /* Espai segur sobre el botó */
   }
   .plan-btn:hover {
     opacity: 0.88;
-  }
+    }
   .plan-btn:focus-visible {
     outline: 2px solid var(--blue);
     outline-offset: 2px;
@@ -395,7 +393,7 @@
     if (plan.monthly) {
       monthlyHtml = "<p class=\"plan-monthly\">" + plan.monthly + "</p>";
     }
-    card.innerHTML ="<p class=\"plan-tab\">" + plan.tab + "</p>" + "<div class=\"plan-price-row\">" +"<span class=\"plan-price\">" + plan.price + "</span>" +"<span class=\"plan-period\">" + plan.period + "</span>" +"</div>" + "<p class=\"plan-note\">" + plan.note + "</p>" +monthlyHtml +"<p class=\"plan-desc\">" + plan.desc + "</p>" +"<button type=\"button\" class=\"plan-btn\">" + plan.cta + "</button>";
+    card.innerHTML = "<p class=\"plan-tab\">" + plan.tab + "</p>" + "<div class=\"plan-price-row\">" + "<span class=\"plan-price\">" + plan.price + "</span>" + "<span class=\"plan-period\">" + plan.period + "</span>" + "</div>" + "<p class=\"plan-note\">" + plan.note + "</p>" + monthlyHtml + "<p class=\"plan-desc\">" + plan.desc + "</p>" + "<button type=\"button\" class=\"plan-btn\">" + plan.cta + "</button>";
     card.addEventListener("click", function () {
       selectCard(card);
     });
@@ -411,7 +409,7 @@
       annualCard = card;
     }
   });
-  selectCard(annualCard ||cards[0]);
+  selectCard(annualCard || cards[0]);
 })();
 </script>
 
