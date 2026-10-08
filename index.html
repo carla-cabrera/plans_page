@@ -61,6 +61,9 @@
   }
   #content {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
   .logo {
     width: 44px;
@@ -92,24 +95,33 @@
     text-align: center;
     max-width: 420px;
   }
+  
+  /* CANVI CLAU: Utilitzem Flexbox per centrar automàticament les targetes */
   .plans {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
     gap: 24px;
     width: 100%;
-    align-items: stretch; /* Assegura que totes les targetes mesuren el mateix */
+    max-width: 900px;
+    flex-wrap: wrap;
   }
+
   .plan-card {
     position: relative;
     display: flex;
-    flex-direction: column; /* Clau per alinear elements verticalment */
+    flex-direction: column;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 24px;
     padding: 44px 32px 36px;
     cursor: pointer;
     transition: border-color 0.2s, box-shadow 0.2s;
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px; /* Evita que s'expandeixin massa si només n'hi ha dues */
   }
+
   .plan-card.selected {
     border: 2px solid var(--blue);
     box-shadow: 0 8px 28px rgba(23, 144, 255, 0.18);
@@ -169,7 +181,7 @@
     line-height: 1.6;
     text-align: center;
     margin: 28px 0 0;
-    flex: 1; /* Permet que aquest bloc ocupi l'espai sobrant i empenyi el botó abaix */
+    flex: 1;
   }
   .plan-btn {
     width: 100%;
@@ -183,11 +195,11 @@
     font-weight: 500;
     cursor: pointer;
     transition: opacity 0.2s;
-    margin-top: 32px; /* Espai segur sobre el botó */
+    margin-top: 32px;
   }
   .plan-btn:hover {
     opacity: 0.88;
-    }
+  }
   .plan-btn:focus-visible {
     outline: 2px solid var(--blue);
     outline-offset: 2px;
@@ -205,19 +217,15 @@
     margin-top: 40px;
     line-height: 1.5;
   }
+
   @media (max-width: 900px) {
     .plans {
-      grid-template-columns: 1fr;
-      gap: 24px;
-    }
-  }
-  @media (max-width: 560px) {
-    .plans {
-      grid-template-columns: 1fr;
-      gap: 24px;
+      flex-direction: column;
+      align-items: center;
     }
     .plan-card {
-      padding: 36px 28px 30px;
+      width: 100%;
+      max-width: 450px;
     }
   }
 
