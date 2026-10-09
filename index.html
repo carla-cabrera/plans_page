@@ -17,6 +17,8 @@
     --button-bg: #000d1f;
     --button-text: #ffffff;
     --link: #0b6fcc;
+    --save-bg: #e7f3ff;
+    --save-text: #0b6fcc;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -29,6 +31,8 @@
       --button-bg: #1790ff;
       --button-text: #ffffff;
       --link: #5eb0ff;
+      --save-bg: rgba(23, 144, 255, 0.16);
+      --save-text: #5eb0ff;
     }
   }
 
@@ -94,14 +98,14 @@
     text-align: center;
     max-width: 420px;
   }
-  
+
   .plans {
     display: flex;
     justify-content: center;
     align-items: stretch;
     gap: 24px;
     width: 100%;
-    max-width: 900px;
+    max-width: 960px;
     flex-wrap: wrap;
   }
 
@@ -112,30 +116,39 @@
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 24px;
-    padding: 44px 32px 36px;
+    padding: 36px 32px 36px;
     cursor: pointer;
     transition: border-color 0.2s, box-shadow 0.2s;
     flex: 1;
     min-width: 300px;
     max-width: 400px;
+    min-height: 440px;
   }
 
   .plan-card.selected {
     border: 2px solid var(--blue);
     box-shadow: 0 8px 28px rgba(23, 144, 255, 0.18);
   }
+
   .plan-tab {
     font-size: 16px;
     font-weight: 600;
     text-align: center;
-    margin: 0 0 28px;
+    margin: 0 0 24px;
   }
+
   .plan-price-row {
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 10px;
     flex-wrap: wrap;
+    min-height: 48px;
+  }
+  .plan-price-main {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
   }
   .plan-price {
     font-size: 40px;
@@ -147,10 +160,37 @@
     font-size: 14px;
     color: var(--text-secondary);
   }
-  .plan-note {
+
+  .plan-save {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--save-bg);
+    color: var(--save-text);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    padding: 5px 12px;
+    border-radius: 980px;
+    white-space: nowrap;
+  }
+
+  .plan-monthly {
     font-size: 14px;
     color: var(--text-secondary);
-    margin: 18px 0 0;
+    margin: 14px 0 0;
+    line-height: 1.5;
+    text-align: center;
+  }
+  .plan-monthly strong {
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  .plan-note {
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin: 10px 0 0;
     line-height: 1.6;
     text-align: center;
   }
@@ -158,27 +198,13 @@
     color: var(--text);
     font-weight: 600;
   }
-  .plan-note .save {
-    color: var(--link);
-    font-weight: 600;
-  }
-  .plan-monthly {
-    font-size: 14px;
-    color: var(--text-secondary);
-    margin: 10px 0 0;
-    line-height: 1.6;
-    text-align: center;
-  }
-  .plan-monthly strong {
-    color: var(--text);
-    font-weight: 600;
-  }
+
   .plan-desc {
     font-size: 13px;
     color: var(--text-secondary);
     line-height: 1.6;
     text-align: center;
-    margin: 28px 0 0;
+    margin: 24px 0 0;
     flex: 1;
   }
   .plan-btn {
@@ -193,7 +219,7 @@
     font-weight: 500;
     cursor: pointer;
     transition: opacity 0.2s;
-    margin-top: 32px;
+    margin-top: 28px;
   }
   .plan-btn:hover {
     opacity: 0.88;
@@ -224,6 +250,7 @@
     .plan-card {
       width: 100%;
       max-width: 450px;
+      min-height: 0;
     }
   }
 
@@ -336,6 +363,7 @@
       tab: "Current plan",
       price: money(q.get("ca")),
       period: currentPeriod,
+      save: "",
       note: "No changes — keep paying as originally agreed.",
       monthly: "",
       desc: currentDescription,
@@ -346,12 +374,12 @@
 
   if (!isAnnual && okUrl(q.get("au")) && okNum(q.get("aa"))) {
     var annualMonthly = Number(q.get("aa")) / 12;
-    var annualNote = "Billed as <strong>" + money(q.get("aa")) + "</strong> once a year — <span class=\"save\">10% discount</span> based on your agreed monthly rate.";
     plans.push({
       tab: "Annual",
       price: money(q.get("aa")),
       period: "per year",
-      note: annualNote,
+      save: "Save 10%",
+      note: "Billed as <strong>" + money(q.get("aa")) + "</strong> once a year.",
       monthly: "Equivalent to <strong>" + money(annualMonthly) + "/month</strong>",
       desc: "Same REVER plan and features, billed once a year instead of " + cadence + ".",
       cta: "Continue with the annual plan",
@@ -361,13 +389,12 @@
 
   if (okUrl(q.get("tu")) && okNum(q.get("ta"))) {
     var twoYearMonthly = Number(q.get("ta")) / 24;
-    var twoYearNote = "Billed as <strong>" + money(q.get("ta")) + "</strong> every 2 years — <span class=\"save\">20% discount</span> based on your agreed monthly rate.";
-
     plans.push({
       tab: "2 years",
       price: money(q.get("ta")),
       period: "every 2 years",
-      note: twoYearNote,
+      save: "Save 20%",
+      note: "Billed as <strong>" + money(q.get("ta")) + "</strong> every 2 years.",
       monthly: "Equivalent to <strong>" + money(twoYearMonthly) + "/month</strong>",
       desc: "Same REVER plan and features, billed once every two years instead of " + cadence + ".",
       cta: "Continue with the 2-year plan",
@@ -395,11 +422,31 @@
   plans.forEach(function (plan) {
     var card = document.createElement("div");
     card.className = "plan-card";
+
+    var saveHtml = "";
+    if (plan.save) {
+      saveHtml = "<span class=\"plan-save\">" + plan.save + "</span>";
+    }
+
     var monthlyHtml = "";
     if (plan.monthly) {
       monthlyHtml = "<p class=\"plan-monthly\">" + plan.monthly + "</p>";
     }
-    card.innerHTML = "<p class=\"plan-tab\">" + plan.tab + "</p>" + "<div class=\"plan-price-row\">" + "<span class=\"plan-price\">" + plan.price + "</span>" + "<span class=\"plan-period\">" + plan.period + "</span>" + "</div>" + "<p class=\"plan-note\">" + plan.note + "</p>" + monthlyHtml + "<p class=\"plan-desc\">" + plan.desc + "</p>" + "<button type=\"button\" class=\"plan-btn\">" + plan.cta + "</button>";
+
+    card.innerHTML =
+      "<p class=\"plan-tab\">" + plan.tab + "</p>" +
+      "<div class=\"plan-price-row\">" +
+        "<span class=\"plan-price-main\">" +
+          "<span class=\"plan-price\">" + plan.price + "</span>" +
+          "<span class=\"plan-period\">" + plan.period + "</span>" +
+        "</span>" +
+        saveHtml +
+      "</div>" +
+      monthlyHtml +
+      "<p class=\"plan-note\">" + plan.note + "</p>" +
+      "<p class=\"plan-desc\">" + plan.desc + "</p>" +
+      "<button type=\"button\" class=\"plan-btn\">" + plan.cta + "</button>";
+
     card.addEventListener("click", function () {
       selectCard(card);
     });
