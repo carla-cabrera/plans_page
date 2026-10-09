@@ -57,7 +57,7 @@
 
   main {
     width: 100%;
-    max-width: 1040px;
+    max-width: 1100px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -103,10 +103,18 @@
     display: flex;
     justify-content: center;
     align-items: stretch;
-    gap: 24px;
+    gap: 32px;
     width: 100%;
-    max-width: 960px;
+    max-width: 1020px;
     flex-wrap: wrap;
+  }
+
+  .plan-card-wrapper {
+    position: relative;
+    flex: 1;
+    min-width: 320px;
+    max-width: 440px;
+    margin-top: 16px; /* Space for the attached badge */
   }
 
   .plan-card {
@@ -119,10 +127,7 @@
     padding: 36px 32px 36px;
     cursor: pointer;
     transition: border-color 0.2s, box-shadow 0.2s;
-    flex: 1;
-    min-width: 300px;
-    max-width: 400px;
-    min-height: 440px;
+    height: 100%;
   }
 
   .plan-card.selected {
@@ -130,11 +135,28 @@
     box-shadow: 0 8px 28px rgba(23, 144, 255, 0.18);
   }
 
+  /* Attached badge on top of the card */
+  .plan-save-badge {
+    position: absolute;
+    top: -16px;
+    right: 28px;
+    background: var(--save-bg);
+    color: var(--save-text);
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    padding: 5px 14px;
+    border-radius: 980px;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--border);
+  }
+
   .plan-tab {
     font-size: 16px;
     font-weight: 600;
     text-align: center;
-    margin: 0 0 24px;
+    margin: 0 0 20px;
   }
 
   .plan-price-row {
@@ -144,6 +166,7 @@
     gap: 10px;
     flex-wrap: wrap;
     min-height: 48px;
+    margin-bottom: 24px;
   }
   .plan-price-main {
     display: flex;
@@ -161,26 +184,28 @@
     color: var(--text-secondary);
   }
 
-  .plan-save {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    background: var(--save-bg);
-    color: var(--save-text);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    padding: 5px 12px;
-    border-radius: 980px;
-    white-space: nowrap;
+  /* Divider line */
+  .plan-divider {
+    width: 100%;
+    height: 1px;
+    background-color: var(--border);
+    margin: 0 0 24px 0;
+  }
+
+  /* Content group below the line */
+  .plan-details {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 1;
   }
 
   .plan-monthly {
     font-size: 14px;
     color: var(--text-secondary);
-    margin: 14px 0 0;
     line-height: 1.5;
     text-align: center;
+    margin: 0;
   }
   .plan-monthly strong {
     color: var(--text);
@@ -190,9 +215,9 @@
   .plan-note {
     font-size: 13px;
     color: var(--text-secondary);
-    margin: 10px 0 0;
     line-height: 1.6;
     text-align: center;
+    margin: 0;
   }
   .plan-note strong {
     color: var(--text);
@@ -204,9 +229,9 @@
     color: var(--text-secondary);
     line-height: 1.6;
     text-align: center;
-    margin: 24px 0 0;
-    flex: 1;
+    margin: 0;
   }
+
   .plan-btn {
     width: 100%;
     padding: 14px;
@@ -247,10 +272,9 @@
       flex-direction: column;
       align-items: center;
     }
-    .plan-card {
+    .plan-card-wrapper {
       width: 100%;
-      max-width: 450px;
-      min-height: 0;
+      max-width: 460px;
     }
   }
 
@@ -412,21 +436,24 @@
   var cards = [];
   var annualCard = null;
 
-  function selectCard(card) {
+  function selectCard(cardElement) {
     cards.forEach(function (c) {
       c.classList.remove("selected");
     });
-    card.classList.add("selected");
+    cardElement.classList.add("selected");
   }
 
   plans.forEach(function (plan) {
+    var wrapper = document.createElement("div");
+    wrapper.className = "plan-card-wrapper";
+
+    var badgeHtml = "";
+    if (plan.save) {
+      badgeHtml = "<div class=\"plan-save-badge\">" + plan.save + "</div>";
+    }
+
     var card = document.createElement("div");
     card.className = "plan-card";
-
-    var saveHtml = "";
-    if (plan.save) {
-      saveHtml = "<span class=\"plan-save\">" + plan.save + "</span>";
-    }
 
     var monthlyHtml = "";
     if (plan.monthly) {
@@ -434,17 +461,20 @@
     }
 
     card.innerHTML =
+      badgeHtml +
       "<p class=\"plan-tab\">" + plan.tab + "</p>" +
       "<div class=\"plan-price-row\">" +
         "<span class=\"plan-price-main\">" +
           "<span class=\"plan-price\">" + plan.price + "</span>" +
           "<span class=\"plan-period\">" + plan.period + "</span>" +
         "</span>" +
-        saveHtml +
       "</div>" +
-      monthlyHtml +
-      "<p class=\"plan-note\">" + plan.note + "</p>" +
-      "<p class=\"plan-desc\">" + plan.desc + "</p>" +
+      "<div class=\"plan-divider\"></div>" +
+      "<div class=\"plan-details\">" +
+        monthlyHtml +
+        "<p class=\"plan-note\">" + plan.note + "</p>" +
+        "<p class=\"plan-desc\">" + plan.desc + "</p>" +
+      "</div>" +
       "<button type=\"button\" class=\"plan-btn\">" + plan.cta + "</button>";
 
     card.addEventListener("click", function () {
@@ -455,7 +485,9 @@
       selectCard(card);
       window.location.href = plan.url;
     });
-    plansEl.appendChild(card);
+
+    wrapper.appendChild(card);
+    plansEl.appendChild(wrapper);
     cards.push(card);
 
     if (plan.tab === "Annual") {
