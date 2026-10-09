@@ -19,7 +19,6 @@
     --link: #0b6fcc;
     --save-bg: #e7f3ff;
     --save-text: #0b6fcc;
-    --tab-bg: #f0f4f9;
     --strike: #93a3ba;
   }
 
@@ -35,7 +34,6 @@
       --link: #5eb0ff;
       --save-bg: rgba(23, 144, 255, 0.16);
       --save-text: #5eb0ff;
-      --tab-bg: rgba(255, 255, 255, 0.08);
       --strike: #5b6778;
     }
   }
@@ -156,21 +154,19 @@
     border: 1px solid var(--border);
   }
 
-  /* Estil bombolla / píndola per al títol del pla */
+  /* Títol del pla: alineat a l'esquerra, més gran i de color blau */
   .plan-tab-container {
-    text-align: center;
+    text-align: left;
     margin-bottom: 20px;
   }
 
   .plan-tab {
     display: inline-block;
-    font-size: 13px;
-    font-weight: 600;
-    background: var(--tab-bg);
-    color: var(--text);
-    padding: 6px 16px;
-    border-radius: 980px;
-    border: 1px solid var(--border);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--blue);
+    letter-spacing: -0.01em;
+    margin: 0;
   }
 
   .plan-price-row {
