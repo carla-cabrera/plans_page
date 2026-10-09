@@ -137,6 +137,7 @@
     box-shadow: 0 8px 28px rgba(23, 144, 255, 0.18);
   }
 
+  /* Badge de descompte a dalt, fora però attached */
   .plan-save-badge {
     position: absolute;
     top: -16px;
@@ -153,6 +154,7 @@
     border: 1px solid var(--border);
   }
 
+  /* Títol del pla: alineat a l'esquerra, de color blau i de la mateixa mida que el preu (36px) */
   .plan-tab-container {
     text-align: left;
     margin-bottom: 20px;
@@ -160,10 +162,11 @@
 
   .plan-tab {
     display: inline-block;
-    font-size: 20px;
+    font-size: 36px;
     font-weight: 700;
     color: var(--blue);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
+    line-height: 1;
     margin: 0;
   }
 
@@ -298,7 +301,7 @@
     h1 {
       font-size: 26px;
     }
-    .plan-price {
+    .plan-price, .plan-tab {
       font-size: 30px;
     }
   }
