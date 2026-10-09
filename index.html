@@ -154,26 +154,27 @@
     border: 1px solid var(--border);
   }
 
-  /* Títol del pla: alineat a l'esquerra, de color blau i de la mateixa mida que el preu (36px) */
+  /* Títol del pla: alineat a l'esquerra, color negre/text general, mida 24px */
   .plan-tab-container {
     text-align: left;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
   }
 
   .plan-tab {
     display: inline-block;
-    font-size: 36px;
+    font-size: 24px;
     font-weight: 700;
-    color: var(--blue);
-    letter-spacing: -0.02em;
-    line-height: 1;
+    color: var(--text);
+    letter-spacing: -0.015em;
+    line-height: 1.2;
     margin: 0;
   }
 
+  /* Preu alineat a l'esquerra */
   .plan-price-row {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     gap: 10px;
     flex-wrap: wrap;
     min-height: 48px;
@@ -220,7 +221,7 @@
     font-size: 14px;
     color: var(--text-secondary);
     line-height: 1.5;
-    text-align: center;
+    text-align: left;
     margin: 0;
   }
   .plan-monthly strong {
@@ -232,7 +233,7 @@
     font-size: 13px;
     color: var(--text-secondary);
     line-height: 1.6;
-    text-align: center;
+    text-align: left;
     margin: 0;
   }
   .plan-note strong {
@@ -244,7 +245,7 @@
     font-size: 13px;
     color: var(--text-secondary);
     line-height: 1.6;
-    text-align: center;
+    text-align: left;
     margin: 0;
   }
 
@@ -301,7 +302,7 @@
     h1 {
       font-size: 26px;
     }
-    .plan-price, .plan-tab {
+    .plan-price {
       font-size: 30px;
     }
   }
